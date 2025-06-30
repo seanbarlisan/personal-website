@@ -1,0 +1,60 @@
+/* Rounded Corners CSS - Flexible Corner Targeting */
+
+/* Top Left Corner Rounding */
+.rounded-tl-sm { border-top-left-radius: 0.125rem; }
+.rounded-tl { border-top-left-radius: 0.25rem; }
+.rounded-tl-md { border-top-left-radius: 0.375rem; }
+.rounded-tl-lg { border-top-left-radius: 0.5rem; }
+.rounded-tl-xl { border-top-left-radius: 0.75rem; }
+.rounded-tl-full { border-top-left-radius: 9999px; }
+
+/* Top Right Corner Rounding */
+.rounded-tr-sm { border-top-right-radius: 0.125rem; }
+.rounded-tr { border-top-right-radius: 0.25rem; }
+.rounded-tr-md { border-top-right-radius: 0.375rem; }
+.rounded-tr-lg { border-top-right-radius: 0.5rem; }
+.rounded-tr-xl { border-top-right-radius: 0.75rem; }
+.rounded-tr-full { border-top-right-radius: 9999px; }
+
+/* Bottom Left Corner Rounding */
+.rounded-bl-sm { border-bottom-left-radius: 0.125rem; }
+.rounded-bl { border-bottom-left-radius: 0.25rem; }
+.rounded-bl-md { border-bottom-left-radius: 0.375rem; }
+.rounded-bl-lg { border-bottom-left-radius: 0.5rem; }
+.rounded-bl-xl { border-bottom-left-radius: 0.75rem; }
+.rounded-bl-full { border-bottom-left-radius: 9999px; }
+
+/* Bottom Right Corner Rounding */
+.rounded-br-sm { border-bottom-right-radius: 0.125rem; }
+.rounded-br { border-bottom-right-radius: 0.25rem; }
+.rounded-br-md { border-bottom-right-radius: 0.375rem; }
+.rounded-br-lg { border-bottom-right-radius: 0.5rem; }
+.rounded-br-xl { border-bottom-right-radius: 0.75rem; }
+.rounded-br-full { border-bottom-right-radius: 9999px; }
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.image-container img {
+    max-width: 200px;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+.image-container img:hover {
+    transform: scale(1.1);
+}
+
+/* Add height and width limits for images */
+.alternative-image {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+#large-image {
+    max-width: 300px;
+    max-height: 300px;
+}
