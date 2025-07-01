@@ -39,22 +39,31 @@ body {
     height: 100vh;
 }
 
-.image-container img {
-    max-width: 200px;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-}
-.image-container img:hover {
-    transform: scale(1.1);
-}
-
-/* Add height and width limits for images */
-.alternative-image {
-    max-width: 100px;
-    max-height: 100px;
-}
-
 #large-image {
     max-width: 300px;
     max-height: 300px;
+}
+
+.left-aligned {
+    position: absolute;
+    left: 140px;
+    top: 250px;
+}
+
+.position-text-1{
+    position: absolute;
+    right: 120px;
+    top: 375px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.position-text-2 {
+    position: absolute;
+    right: 120px;
+    top: 400px;
+    color: gray;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
