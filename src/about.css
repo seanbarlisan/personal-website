@@ -39,40 +39,17 @@ body {
     height: 100vh;
 }
 
-#large-image {
-    max-width: 400px;
-    max-height: 400px;
+#projects-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 100px;
+    height: 100vh;
 }
 
-.left-aligned {
-    position: absolute;
-    left: 450px;
-    top: 300px;
-}
-
-#position-text-1{
-    position: absolute;
-    right: 120px;
-    top: 375px;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-#position-text-2 {
-    position: absolute;
-    right: 120px;
-    top: 400px;
-    color: gray;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-#position-text-3 {
-    position: absolute;
-    right: 120px;
-    top: 425px;
-    color: gray;
-    font-size: 1.2rem;
-    font-weight: bold;
+.project-title{
+    text-align: left;
+    justify-content: left;
+    align-items: left;
+    height: 100vh;
 }
