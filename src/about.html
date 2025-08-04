@@ -6,11 +6,54 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="about.css">
+    <style>
+        html, body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+        }
+
+        .content-wrapper {
+            position: relative;
+            padding-top: 470px; /* Increased from 120px to 140px */
+            width: 100%;
+            margin-top: 25rem;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Higher z-index to ensure it's above other content */
+            background-color: black;
+            border-bottom: 1px solid #333;
+            padding: 1rem 0;
+        }
+
+        section {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            background-color: black;
+            z-index: 10;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body class="bg-black text-white font-sans">
     <!-- Top Navigation Bar -->
-    <header class="w-full bg-black text-white py-4 fixed top-7 left-0 z-10">
-        <div class="container mx-auto flex justify-between items-center px-4 pl-4">
+    <header class="w-full bg-black text-white py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
             <div class="flex items-center">
                 <div>
                     <h1 class="text-2xl font-bold">hello, i'm sean!</h1>
@@ -25,49 +68,95 @@
         </div>
     </header>
 
-    <!-- About Section -->
-    <section class="container mx-auto px-4 mt-32 pl-36">
-        <h2 class="text-3xl font-bold mb-6">about me</h2>
-        <p class="text-gray-300 text-lg leading-relaxed">
-            hey there! i'm sean, i'm computer engineering graduate from New Jersey Institute of Technology. i've been working in the software engineering field for almost a year, specializing in DevSecOps and Systems Operations. i've been focused on learning about cloud systems, automation applications and technologies, and networking applications and protocols.
-        </p>
-        <!-- Hobbies Section -->
-        <div class="mt-8">
-            <h3 class="text-2xl font-bold mb-4">current hobbies and obsessions</h3>
-            <ul class="list-disc pl-8 text-gray-300 text-lg leading-relaxed">
-                <li>completing story mode video games, currently on Baldur's Gate 3 and GTA: IV</li>
-                <li>thrifting for new clothes and exploring new styles</li>
-                <li>working out and staying fit</li>
-                <li>watching esports, currently watching a lot of league of legends esports</li>
-                <li>learning a lot of new meal prep recipes</li>
-
-            </ul>
-        </div>
-    </section>
-
-    <!-- Work Experience Section -->
-    <section class="container mx-auto px-4 mt-16 pl-28">
-        <h2 class="text-3xl font-bold mb-6">work experience</h2>
-        <div class="space-y-8">
-            <div class="experience">
-                <h3 class="text-2xl font-bold">Systems Operations Manager</h3>
-                <p class="text-gray-400 text-sm italic mb-4">Faloni Law Group</p>
+    <div class="content-wrapper">
+        <!-- About Section -->
+        <section class="container mx-auto px-8">
+            <h2 class="text-3xl font-bold mb-6">about me</h2>
+            <p class="text-gray-300 text-lg leading-relaxed">
+                hey there! i'm sean, i'm computer engineering graduate from New Jersey Institute of Technology. i've been working in the software engineering field for a year, specializing in DevSecOps and Systems Operations. i've been focused on learning about cloud systems, automation applications and technologies, and networking applications and protocols.
+            </p>
+            <!-- Hobbies Section -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold mb-4">current hobbies and obsessions</h3>
                 <ul class="list-disc pl-8 text-gray-300 text-lg leading-relaxed">
-                    <li>Monitored and optimized system performance for critical applications.</li>
-                    <li>Developed scripts to automate routine tasks and improve operational efficiency.</li>
-                    <li>Assisted in troubleshooting and resolving network-related issues.</li>
+                    <li>completing story mode video games, currently on Octopath Traveler 2 and Resident Evil 4</li>
+                    <li>thrifting for new clothes and exploring new styles</li>
+                    <li>working out and staying fit</li>
+                    <li>watching esports, currently watching a lot of league of legends esports</li>
+                    <li>learning a lot of new meal prep recipes</li>
                 </ul>
             </div>
-            <div class="experience">
-                <h3 class="text-2xl font-bold">DevSecOps Engineer</h3>
-                <p class="text-gray-400 text-sm italic mb-4">MSC Industrial Supply</p>
-                <ul class="list-disc pl-8 text-gray-300 text-lg leading-relaxed">
-                    <li>Implemented security automation tools to streamline DevOps workflows.</li>
-                    <li>Designed and maintained cloud infrastructure using AWS and Google Cloud Platform.</li>
-                    <li>Collaborated with cross-functional teams to ensure secure software delivery pipelines.</li>
-                </ul>
+        </section>
+
+        <!-- Work Experience Section -->
+        <section class="container mx-auto px-8">
+            <h2 class="text-3xl font-bold mb-6">work experience</h2>
+            <div class="space-y-8">
+                <div class="project-card bg-zinc-900 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold">Systems Operations Manager</h3>
+                    <p class="text-gray-400 text-sm italic mb-4">Faloni Law Group</p>
+                    <span class="bg-cyan-600 px-3 py-1 rounded-full text-sm">HTML</span>
+                    <span class="bg-cyan-600 px-3 py-1 rounded-full text-sm">CSS</span>
+                    <span class="bg-red-600 px-3 py-1 rounded-full text-sm">Python</span>
+                    <span class="bg-red-600 px-3 py-1 rounded-full text-sm">JavaScript</span>
+                    <span class="bg-red-600 px-3 py-1 rounded-full text-sm">Bash</span>
+                    <span class="bg-red-600 px-3 py-1 rounded-full text-sm">PowerShell</span>
+                    <span class="bg-orange-600 px-3 py-1 rounded-full text-sm">MSSQL</span>
+                    <span class="bg-blue-600 px-3 py-1 rounded-full text-sm">AWS</span>
+                    <ul class="list-disc pl-8 py-4 text-gray-300 text-lg leading-relaxed">
+                        <li>Streamlined file transfers from New Jersey and New York courts by 40% by refactoring Python code.</li>
+                        <li>Enhanced employee performance by 20% by upgrading and managing technology software and hardware.</li>
+                        <li>Automated e-mail scraping with Python and other libraries to streamline payments and settlements by 60%.</li>
+                        <li>Developed Django and PostgresQL scripts to enhance user productivity with New Jersey Courts information by 40%.</li>
+                    </ul>
+                </div>
+                <div class="project-card bg-zinc-900 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold">DevSecOps Engineer</h3>
+                    <p class="text-gray-400 text-sm italic mb-4">MSC Industrial Supply</p>
+                    <span class="bg-red-600 px-3 py-1 rounded-full text-sm">Terraform</span>
+                    <span class="bg-red-600 px-3 py-1 rounded-full text-sm">Bash</span>
+                    <span class="bg-green-600 px-3 py-1 rounded-full text-sm">Jenkins</span>
+                    <span class="bg-blue-600 px-3 py-1 rounded-full text-sm">Google Cloud Platform</span>
+                    <span class="bg-blue-600 px-3 py-1 rounded-full text-sm">Redis</span>
+                    <span class="bg-blue-600 px-3 py-1 rounded-full text-sm">Docker</span>
+                    <ul class="list-disc pl-8 py-4 text-gray-300 text-lg leading-relaxed">
+                        <li>Engineered enhancements to existing Virtual Machine hardware, resulting in a significant 20% cost reduction while maintaining optimal performance.</li>
+                        <li>Enhanced deployment times by 40% by refactoring Jenkinsfiles to establish seamless integration and development.</li>
+                        <li>CExecuted monthly operation system deployments to maintain software consistency and security updates for the e-commerce platform, ensuring sustained performance and fortified defenses against potential threats.</li>
+                        <li>Accelerated Deployments by 30% by containerizing legacy .war files into Dockerfiles.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="container mx-auto px-8">
+            <h2 class="text-3xl font-bold mb-6">projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="project-card bg-zinc-900 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-2">Machine Learning Irrigation System</h3>
+                    <p class="text-gray-300 mb-4">Machine learning irrigation system focused on adapting to the weather conditions based on pulling weather patterns from public API endpoints, humidity, and moisture from environment.</p>
+                    <div class="flex gap-2">
+                        <span class="bg-red-600 px-3 py-1 rounded-full text-sm">C++</span>
+                        <span class="bg-orange-600 px-3 py-1 rounded-full text-sm">SQL</span>
+                        <span class="bg-blue-600 px-3 py-1 rounded-full text-sm">Terraform</span>
+                        <span class="bg-blue-600 px-3 py-1 rounded-full text-sm">Google Firebase</span>
+                        <span class="bg-blue-600 px-3 py-1 rounded-full text-sm">Google Cloud Platform</span>
+                        <span class="bg-gray-600 px-3 py-1 rounded-full text-sm">AutoCAD</span>
+                    </div>
+                </div>
+
+                <div class="project-card bg-zinc-900 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-2">Automated Minecraft Server</h3>
+                    <p class="text-gray-300 mb-4">Automated deployment of a Minecraft server from Terraform and running written Bash files with cloud storage.</p>
+                    <div class="flex gap-2">
+                        <span class="bg-red-600 px-3 py-1 rounded-full text-sm">Bash</span>
+                        <span class="bg-blue-600 px-3 py-1 rounded-full text-sm">Terraform</span>
+                        <span class="bg-blue-600 px-3 py-1 rounded-full text-sm">AWS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
