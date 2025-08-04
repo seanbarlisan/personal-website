@@ -1,5 +1,7 @@
-FROM nginx:alpine
-WORKDIR /usr/share/nginx/html
+FROM nginx
 
-COPY . .
-CMD ["nginx", "-g", "daemon off;"]
+COPY nginx.conf /etc/nginx/nginx.conf
+
+RUN rm /usr/share/nginx/html/index.html
+
+COPY . /usr/share/nginx/html/
