@@ -5,5 +5,5 @@ FROM nginx:stable
 COPY src/ /usr/share/nginx/html
 
 
-# docker build -t demo-nginx .
-# docker run -it --rm -d -p 8080:80 --name demonginx demo-nginx && docker attach demonginx
+# docker build -t personal-websitev#:latest .
+# docker run -p 8080:80 personal-websitev#:latest 
