@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="index.css">
     <style>
-        /* Basic styling for the body to account for the fixed header */
         body {
             padding-top: 114px; /* Adjust this value to match your banner's height */
             background-color: black;
@@ -17,38 +16,39 @@
 
         /* Styles for the Spotify section */
         #spotify-data-container {
-            margin-top: 2rem;
-            padding: 1.5rem;
+            margin-top: 1rem; /* Reduced margin-top */
+            padding: 1rem; /* Reduced padding */
             background-color: #1a1a1a;
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 400px; /* Reduced max-width */
+            /* Removed margin-left: auto; margin-right: auto; to allow left alignment */
+            margin-left: 2rem; /* Add some left margin for spacing from the edge */
         }
 
         #spotify-data-container h2 {
-            font-size: 1.875rem; /* text-3xl */
+            font-size: 1.5rem; /* text-2xl */
             font-weight: 700; /* font-bold */
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem; /* Reduced margin-bottom */
             color: #1DB954; /* Spotify green */
         }
 
         #spotify-data-container p {
-            font-size: 1.125rem; /* text-lg */
+            font-size: 1rem; /* text-base */
             color: #ccc;
-            line-height: 1.6;
+            line-height: 1.5; /* Adjusted line height */
         }
 
         #spotify-data-container button {
             background-color: #1DB954;
             color: white;
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem; /* Reduced padding */
             border-radius: 0.375rem;
             font-weight: 600;
-            margin-top: 1.5rem;
+            margin-top: 1rem; /* Reduced margin-top */
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-size: 0.875rem; /* text-sm */
         }
 
         #spotify-data-container button:hover {
@@ -58,9 +58,35 @@
         #spotify-loading {
             color: #1DB954;
             text-align: center;
-            margin-top: 1rem;
+            margin-top: 0.5rem; /* Reduced margin-top */
             font-style: italic;
+            font-size: 0.875rem; /* text-sm */
         }
+
+        /* Styles for the fetched Spotify content (inside spotify-content) */
+        #spotify-content .flex {
+            align-items: center;
+            gap: 1rem; /* Space between image and text */
+        }
+
+        #spotify-content img {
+            width: 64px; /* Smaller image size */
+            height: 64px;
+            border-radius: 0.25rem; /* Slightly less rounded */
+        }
+
+        #spotify-content .text-xl {
+            font-size: 1.125rem; /* Smaller track name */
+        }
+
+        #spotify-content .text-lg {
+            font-size: 0.9rem; /* Smaller artist name */
+        }
+
+        #spotify-content .text-sm {
+            font-size: 0.75rem; /* Smaller status text */
+        }
+
     </style>
 </head>
 <body class="bg-black text-white font-sans">
@@ -82,7 +108,7 @@
     </header>
     
     <!-- Main Content Section -->
-    <main class="flex h-screen pt-12 py-4">
+    <main class="flex flex-col items-start pt-12 py-4 pl-4">
         <!-- Profile Section -->
         <div>
             <img id="large-image" src="images/picture_for_website.JPG" alt="Large Picture" class="left-aligned rounded-lg max-w-full h-auto" width="300" height="500">
@@ -106,85 +132,8 @@
         // IMPORTANT: Replace with your actual Spotify API endpoint and access token.
         // For a real application, you would implement an OAuth 2.0 flow to get a user's access token.
         // Storing tokens directly in client-side code is NOT secure for production.
-        const SPOTIFY_API_ENDPOINT = 'YOUR_SPOTIFY_API_ENDPOINT_HERE'; // e.g., 'https://api.spotify.com/v1/me/player/currently-playing'
-        const SPOTIFY_ACCESS_TOKEN = 'YOUR_SPOTIFY_ACCESS_TOKEN_HERE'; // This needs to be dynamically obtained
-
         async function fetchSpotifyData() {
-            const spotifyContent = document.getElementById('spotify-content');
-            const loadingIndicator = document.getElementById('spotify-loading');
-            spotifyContent.innerHTML = ''; // Clear previous content
-            loadingIndicator.classList.remove('hidden'); // Show loading indicator
-
-            // Basic validation for placeholder values
-            if (SPOTIFY_API_ENDPOINT === 'YOUR_SPOTIFY_API_ENDPOINT_HERE' || SPOTIFY_ACCESS_TOKEN === 'YOUR_SPOTIFY_ACCESS_TOKEN_HERE') {
-                spotifyContent.innerHTML = '<p class="text-red-500">Please replace `YOUR_SPOTIFY_API_ENDPOINT_HERE` and `YOUR_SPOTIFY_ACCESS_TOKEN_HERE` with actual values in the JavaScript code.</p>';
-                loadingIndicator.classList.add('hidden');
-                return;
-            }
-
-            try {
-                const response = await fetch(SPOTIFY_API_ENDPOINT, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${SPOTIFY_ACCESS_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    // Handle HTTP errors
-                    const errorData = await response.json();
-                    throw new Error(`Spotify API error: ${response.status} - ${errorData.error.message || response.statusText}`);
-                }
-
-                const data = await response.json();
-                console.log('Spotify API Response:', data);
-
-                // --- Displaying the data ---
-                // This part will depend heavily on the specific Spotify endpoint you call.
-                // Below is an example for the "currently playing" endpoint.
-                if (data && data.is_playing) {
-                    const trackName = data.item.name;
-                    const artistName = data.item.artists.map(artist => artist.name).join(', ');
-                    const albumArt = data.item.album.images[0].url;
-
-                    spotifyContent.innerHTML = `
-                        <div class="flex items-center space-x-4">
-                            <img src="${albumArt}" alt="Album Art" class="w-24 h-24 rounded-lg shadow-lg">
-                            <div>
-                                <p class="text-xl font-semibold">${trackName}</p>
-                                <p class="text-lg text-gray-400">${artistName}</p>
-                                <p class="text-sm text-gray-500">Currently Playing</p>
-                            </div>
-                        </div>
-                    `;
-                } else if (data && data.item) {
-                     // If not currently playing, but an item is returned (e.g., last played)
-                    const trackName = data.item.name;
-                    const artistName = data.item.artists.map(artist => artist.name).join(', ');
-                    const albumArt = data.item.album.images[0].url;
-
-                    spotifyContent.innerHTML = `
-                        <div class="flex items-center space-x-4">
-                            <img src="${albumArt}" alt="Album Art" class="w-24 h-24 rounded-lg shadow-lg">
-                            <div>
-                                <p class="text-xl font-semibold">${trackName}</p>
-                                <p class="text-lg text-gray-400">${artistName}</p>
-                                <p class="text-sm text-gray-500">Last Played</p>
-                            </div>
-                        </div>
-                    `;
-                }
-                else {
-                    spotifyContent.innerHTML = '<p>No Spotify activity found or data format unexpected.</p>';
-                }
-
-            } catch (error) {
-                console.error('Error fetching Spotify data:', error);
-                spotifyContent.innerHTML = `<p class="text-red-500">Failed to load Spotify data: ${error.message}. Please check your API endpoint and access token.</p>`;
-            } finally {
-                loadingIndicator.classList.add('hidden'); // Hide loading indicator
-            }
+            
         }
     </script>
 </body>
