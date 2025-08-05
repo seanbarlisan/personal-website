@@ -2,44 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sean Barlisan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean Barlisan - Home</title>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="index.css">
-    <style>
-        body {
-            padding-top: 114px; /* Adjust this value to match your banner's height */
-            background-color: black;
-            color: white;
-            font-family: sans-serif;
-        }
-
-        /* Styles for the Spotify section */
-        #spotify-data-container {
-            margin-top: 1rem; /* Reduced margin-top */
-            padding: 1rem; /* Reduced padding */
-            background-color: #1a1a1a;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px; /* Reduced max-width */
-            /* Removed margin-left: auto; margin-right: auto; to allow left alignment */
-            margin-left: 2rem; /* Add some left margin for spacing from the edge */
-        }
-
-        #spotify-data-container h2 {
-            font-size: 1.5rem; /* text-2xl */
-            font-weight: 700; /* font-bold */
-            margin-bottom: 0.75rem; /* Reduced margin-bottom */
-            color: #ccc; /* Spotify green */
-        }
-
-        #spotify-data-container p {
-            font-size: 1rem; /* text-base */
-            color: #ccc;
-            line-height: 1.5; /* Adjusted line height */
-        }
-        
-    </style>
 </head>
 <body class="bg-black text-white font-sans">
     <!-- Top Navigation Bar -->
@@ -58,23 +25,25 @@
             </div>
         </div>
     </header>
-    
+
     <!-- Main Content Section -->
-    <main class="flex flex-col items-start pt-12 py-4 pl-4">
-        <!-- Profile Section -->
-        <div>
-            <img id="large-image" src="images/picture_for_website.JPG" alt="Large Picture" class="left-aligned rounded-lg max-w-full h-auto" width="300" height="500">
-            <h1 id="position-text-1">Sean Barlisan</h1>
-            <h2 id="position-text-2">Computer Engineer</h2>
-            <p id="position-text-3">Systems Operations Manager</p>
+    <main class="flex flex-row items-start pt-12 py-4 px-4 gap-x-8">
+        <!-- Spotify Data Display Section -->
+        <div id="spotify-data-container" class="flex-shrink-0">
+            <h2 class="text-left">My Spotify Activity</h2>
+            <div id="spotify-content">
+                <p>Click the button below to fetch some Spotify data!</p>
+            </div>
+            <div id="spotify-loading" class="hidden">Loading Spotify data...</div>
+            <button onclick="fetchSpotifyData()">Load Spotify Data</button>
         </div>
 
-        <!-- Spotify Data Display Section -->
-        <div id="spotify-data-container" class="w-full">
-            <h2 class="text-center">Recently Played</h2>
-            <div id="spotify-content">
-                fetchSpotifyData()
-            </div>
+        <!-- Profile Section - Now a Flexbox container itself -->
+        <div class="flex flex-col items-center justify-center flex-grow"> <!-- Added flex flex-col items-center justify-center flex-grow -->
+            <img id="large-image" src="images/picture_for_website.JPG" alt="Large Picture" class="rounded-lg max-w-full h-auto" width="300" height="500">
+            <h1 id="position-text-1" class="text-3xl font-bold mt-4">Sean Barlisan</h1>
+            <h2 id="position-text-2" class="text-xl text-gray-300">Computer Engineer</h2>
+            <p id="position-text-3" class="text-lg text-gray-400">Systems Operations Manager</p>
         </div>
     </main>
 
@@ -82,8 +51,11 @@
         // IMPORTANT: Replace with your actual Spotify API endpoint and access token.
         // For a real application, you would implement an OAuth 2.0 flow to get a user's access token.
         // Storing tokens directly in client-side code is NOT secure for production.
+        const SPOTIFY_API_ENDPOINT = 'YOUR_SPOTIFY_API_ENDPOINT_HERE'; // e.g., 'https://api.spotify.com/v1/me/player/currently-playing'
+        const SPOTIFY_ACCESS_TOKEN = 'YOUR_SPOTIFY_ACCESS_TOKEN_HERE'; // This needs to be dynamically obtained
+
         async function fetchSpotifyData() {
-            
+
         }
     </script>
 </body>
