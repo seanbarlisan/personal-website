@@ -57,6 +57,8 @@ app.get('/login', (req, res) => {
         '&client_id=' + CLIENT_ID +
         '&scope=' + encodeURIComponent(scopes) +
         '&redirect_uri=' + encodeURIComponent(REDIRECT_URI));
+
+    console.log("Redirecting to Spotify for authorization...");
 });
 
 app.get('/callback', async (req, res) => {
@@ -111,5 +113,5 @@ app.get('/api/spotify-recently-listened', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+    console.log(`Server listening at http://127.0.0.1:${port}`);
 });
