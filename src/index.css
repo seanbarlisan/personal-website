@@ -80,53 +80,27 @@ header {
 
 /* Styles for the Spotify section */
 #spotify-data-container {
-    margin-top: 1rem; /* Reduced margin-top */
-    padding: 1rem; /* Reduced padding */
+    padding: 1.5rem;
     background-color: #1a1a1a;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 400px; /* Reduced max-width */
-    /* Removed margin-left: auto; margin-right: auto; and specific margin-left */
-    /* Spacing will now be handled by gap-x on the main flex container */
+    width: 300px; /* Fixed width to match profile image */
 }
 
 #spotify-data-container h2 {
-    font-size: 1.5rem; /* text-2xl */
-    font-weight: 700; /* font-bold */
-    margin-bottom: 0.75rem; /* Reduced margin-bottom */
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
     color: #1DB954; /* Spotify green */
-    text-align: left; /* Align title to the left */
+    text-align: left;
 }
 
 #spotify-data-container p {
-    font-size: 1rem; /* text-base */
+    font-size: 1rem;
     color: #ccc;
-    line-height: 1.5; /* Adjusted line height */
+    line-height: 1.5;
 }
 
-#spotify-data-container button {
-    background-color: #1DB954;
-    color: white;
-    padding: 0.5rem 1rem; /* Reduced padding */
-    border-radius: 0.375rem;
-    font-weight: 600;
-    margin-top: 1rem; /* Reduced margin-top */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 0.875rem; /* text-sm */
-}
-
-#spotify-data-container button:hover {
-    background-color: #179e46;
-}
-
-#spotify-loading {
-    color: #1DB954;
-    text-align: left; /* Align loading text to the left */
-    margin-top: 0.5rem; /* Reduced margin-top */
-    font-style: italic;
-    font-size: 0.875rem; /* text-sm */
-}
 
 /* Styles for the fetched Spotify content (inside spotify-content) */
 #spotify-content .flex {
