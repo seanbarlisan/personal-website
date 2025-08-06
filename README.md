@@ -1,0 +1,1 @@
+Personal Website that I have developed on my own time. Uses simple static website alongside the implementation of basic JavaScript integration with ExpressJS and API endpoint calling with Spotify Developer
