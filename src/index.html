@@ -81,6 +81,7 @@
 
         // This variable is not a final access token; it's the URL for the user to authorize your app.
         // The actual access token is obtained in the function below.
+        
         const authUrl = `https://accounts.spotify.com/authorize?` +
                         `client_id=${CLIENT_ID}&` +
                         `response_type=code&` +
@@ -89,6 +90,7 @@
         
         // This function would be called after the user is redirected back to your application with a 'code' in the URL.
         // For example, if the URL is http://127.0.0.1:8080/?code=AQC_..., you would extract the code.
+
         async function fetchAccessToken(code) {
             const tokenUrl = "https://accounts.spotify.com/api/token";
             const body = new URLSearchParams({
