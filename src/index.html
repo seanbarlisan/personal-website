@@ -43,14 +43,90 @@
     </main>
 
     <script>
-        // IMPORTANT: Replace with your actual Spotify API endpoint and access token.
-        // For a real application, you would implement an OAuth 2.0 flow to get a user's access token.
-        // Storing tokens directly in client-side code is NOT secure for production.
-        const SPOTIFY_API_ENDPOINT = 'YOUR_SPOTIFY_API_ENDPOINT_HERE'; // e.g., 'https://api.spotify.com/v1/me/player/currently-playing'
-        const SPOTIFY_ACCESS_TOKEN = 'YOUR_SPOTIFY_ACCESS_TOKEN_HERE'; // This needs to be dynamically obtained
+        import {
+            SecretsManagerClient,
+            GetSecretValueCommand,
+        } from "@aws-sdk/client-secrets-manager";
 
-        async function fetchSpotifyData() {
+        const secret_name = "spotify_recently_listened_web_api_secrets";
+        const client = new SecretsManagerClient({
+        region: "us-east-1",
+        });
 
+        let response;
+        let secrets;
+
+        try {
+        response = await client.send(
+            new GetSecretValueCommand({
+            SecretId: secret_name,
+            VersionStage: "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified
+            })
+        );
+        
+        // Parse the secret string as JSON
+        secrets = JSON.parse(response.SecretString);
+        } catch (error) {
+        // For a list of exceptions thrown, see
+        // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
+        console.error("Error retrieving secrets:", error);
+        throw error;
+        }
+
+        // Extract the secrets from the parsed JSON
+        const CLIENT_ID = secrets.client_id;
+        const CLIENT_SECRET = secrets.client_secret;
+        const REFRESH_TOKEN = secrets.refresh_token; // This isn't needed for the initial token request but is for refreshing
+        const REDIRECT_URI = "http://127.0.0.1:8080";
+
+        // This variable is not a final access token; it's the URL for the user to authorize your app.
+        // The actual access token is obtained in the function below.
+        const authUrl = `https://accounts.spotify.com/authorize?` +
+                        `client_id=${CLIENT_ID}&` +
+                        `response_type=code&` +
+                        `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
+                        `scope=${encodeURIComponent("user-read-private user-read-email")}`;
+        
+        // This function would be called after the user is redirected back to your application with a 'code' in the URL.
+        // For example, if the URL is http://127.0.0.1:8080/?code=AQC_..., you would extract the code.
+        async function fetchAccessToken(code) {
+            const tokenUrl = "https://accounts.spotify.com/api/token";
+            const body = new URLSearchParams({
+                grant_type: 'authorization_code',
+                code: code,
+                redirect_uri: REDIRECT_URI,
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET,
+            });
+
+            try {
+                const response = await fetch(tokenUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: body,
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                // The API returns the access token and other details here.
+                const ACCESS_TOKEN = data.access_token;
+                const REFRESH_TOKEN = data.refresh_token;
+
+                console.log("Successfully obtained access token:", ACCESS_TOKEN);
+                console.log("Refresh token:", REFRESH_TOKEN);
+                
+                return ACCESS_TOKEN;
+
+            } catch (error) {
+                console.error("Error fetching access token:", error);
+                throw error;
+            }
         }
     </script>
 </body>
