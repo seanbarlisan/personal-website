@@ -52,6 +52,7 @@ const authUrl = `https://accounts.spotify.com/authorize?` +
 // This function would be called after the user is redirected back to your application with a 'code' in the URL.
 // For example, if the URL is http://127.0.0.1:8080/?code=AQC_..., you would extract the code.
 
+
 async function fetchAccessToken(code) {
     const tokenUrl = "https://accounts.spotify.com/api/token";
     const body = new URLSearchParams({
@@ -91,3 +92,5 @@ async function fetchAccessToken(code) {
         throw error;
     }
 }
+
+fetchAccessToken() // Authorization Code should be passed here
