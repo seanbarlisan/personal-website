@@ -42,7 +42,7 @@ throw error;
 const CLIENT_ID = secrets.client_id;
 const CLIENT_SECRET = secrets.client_secret;
 const REFRESH_TOKEN = secrets.refresh_token; // This isn't needed for the initial token request but is for refreshing
-const REDIRECT_URI = "http://127.0.0.1:5500";
+const REDIRECT_URI = "http://127.0.0.1:3000/callback";
 
 const authUrl = `https://accounts.spotify.com/authorize?` +
                 `client_id=${CLIENT_ID}&` +
@@ -86,6 +86,10 @@ app.get('/callback', async (req, res) => {
     }
 });
 
+app.get('/', (req, res) => {
+    res.redirect('/login');
+});
+
 app.get('/api/spotify-recently-listened', async (req, res) => {
     try {
         const response = await axios.get('https://api.spotify.com/v1/me/player/recently-played', {
@@ -115,3 +119,5 @@ app.get('/api/spotify-recently-listened', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server listening at http://127.0.0.1:${port}`);
 });
+
+
