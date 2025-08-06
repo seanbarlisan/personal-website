@@ -1,8 +1,8 @@
 // Need to implement the access token call from the backend
+// Need to implement the frontend script for the JS on the index.html where it calls the custom endpoint and gets the data from the backend from the spotify blah
 // Need to move the AWS Secrets Manager code to a separate file or function on the backend because it will not work on the client browser
 // Need to finish the JSON separation and display logic for the Spotify data
 // Need to adjust information for other code etc..
-// Good example https://github.com/phillip-che/phillipche-site/blob/main/src/hooks/useSpotifyAuth.ts
 
 import {
     SecretsManagerClient,
