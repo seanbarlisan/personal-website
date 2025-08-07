@@ -18,6 +18,8 @@ const client = new SecretsManagerClient({
 region: "us-east-1",
 });
 
+// Small ass change
+
 let response;
 let secrets;
 
