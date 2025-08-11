@@ -10,6 +10,7 @@ import {
 
 import express from 'express';
 import axios from 'axios';
+import cors from 'cors';
 const app = express();
 const port = 3000;
 
@@ -52,6 +53,8 @@ const authUrl = `https://accounts.spotify.com/authorize?` +
                 `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
                 `scope=${encodeURIComponent("user-read-private user-read-email")}`;
 
+app.use(cors());
+
 app.get('/login', (req, res) => {
     const scopes = 'user-read-recently-played';
     res.redirect('https://accounts.spotify.com/authorize' +
@@ -88,17 +91,46 @@ app.get('/callback', async (req, res) => {
     }
 });
 
+async function refreshAccessToken() {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: 'https://accounts.spotify.com/api/token',
+            data: new URLSearchParams({
+                grant_type: 'refresh_token',
+                refresh_token: REFRESH_TOKEN
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + (Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
+            }
+        });
+        accessToken = response.data.access_token;
+        console.log("Access token refreshed");
+        return accessToken;
+    } catch (error) {
+        console.error("Failed to refresh token:", error);
+        throw error;
+    }
+}
+
 app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
 app.get('/api/spotify-recently-listened', async (req, res) => {
     try {
+        // Try to refresh token if we don't have one
+        if (!accessToken) {
+            await refreshAccessToken();
+        }
+        
         const response = await axios.get('https://api.spotify.com/v1/me/player/recently-played', {
             headers: {
                 'Authorization': 'Bearer ' + accessToken
             }
         });
+        
         const track = response.data.items[0].track;
         const processedData = {
             title: track.name,
@@ -107,11 +139,26 @@ app.get('/api/spotify-recently-listened', async (req, res) => {
         };
         res.json(processedData);
     } catch (error) {
-        // Handle token expiration by refreshing it
-        if (error.response.status === 401 && refreshToken) {
-            // (Note: This is a simplified example. You'd need a more robust refresh token implementation.)
-            // The logic to use the refresh token to get a new access token would go here.
-            res.status(500).send('Access token expired. Please re-authenticate.');
+        if (error.response?.status === 401) {
+            // Token expired, try refreshing
+            try {
+                await refreshAccessToken();
+                // Retry the request
+                const response = await axios.get('https://api.spotify.com/v1/me/player/recently-played', {
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken
+                    }
+                });
+                const track = response.data.items[0].track;
+                const processedData = {
+                    title: track.name,
+                    artist: track.artists[0].name,
+                    albumArt: track.album.images[0].url
+                };
+                res.json(processedData);
+            } catch (refreshError) {
+                res.status(401).send('Authentication required. Please visit /login');
+            }
         } else {
             res.status(500).send('Failed to fetch music data.');
         }

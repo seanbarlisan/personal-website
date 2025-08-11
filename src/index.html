@@ -28,9 +28,11 @@
 
     <main class="flex flex-row items-start justify-center pt-12 py-4 px-4 gap-x-52 min-h-screen">
         <!-- Spotify Data Display Section -->
-        <div id="spotify-data-container" class="flex-shrink-0">
-            <h2>Recently Played</h2>
-            <p>fetchSpotifyData()</p>
+        <div id="spotify-data-container" class="flex-shrink-0 bg-gray-900 rounded-lg p-6 max-w-md">
+            <h2 class="text-xl font-bold mb-4 text-center">Recently Played</h2>
+            <div id="music-cell" class="text-center">
+                <p class="text-gray-400">Loading...</p>
+            </div>
         </div>
         
         <!-- Profile Section -->
@@ -41,5 +43,43 @@
             <p id="position-text-3" class="text-lg text-gray-400 text-center">Systems Operations Manager</p>
         </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const musicCell = document.getElementById('music-cell');
+
+            // Make a fetch request to your custom backend endpoint
+            fetch('http://127.0.0.1:3000/api/spotify-recently-listened')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received data:', data); // Debug log
+                    
+                    // Update the HTML to display the music information
+                    musicCell.innerHTML = `
+                        <div class="album-art-container mb-4">
+                            <img src="${data.albumArt}" alt="${data.title} album art" class="rounded-lg mx-auto" style="max-width: 200px;">
+                        </div>
+                        <div class="track-info">
+                            <p class="song-title text-lg font-semibold mb-1">${data.title}</p>
+                            <p class="artist-name text-gray-300">${data.artist}</p>
+                        </div>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error fetching music data:', error);
+                    musicCell.innerHTML = `
+                        <div class="text-red-400">
+                            <p>Could not load recently played music.</p>
+                            <p class="text-sm mt-2">Error: ${error.message}</p>
+                        </div>
+                    `;
+                });
+        });
+    </script>
 </body>
 </html>
