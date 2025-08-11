@@ -80,7 +80,7 @@ header {
 
 /* Styles for the Spotify section */
 #spotify-data-container {
-    padding: 1.5rem;
+    padding: 3rem;
     background-color: #1a1a1a;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -92,7 +92,7 @@ header {
     font-weight: 700;
     margin-bottom: 1rem;
     color: #1DB954; /* Spotify green */
-    text-align: left;
+    text-align: center;
 }
 
 #spotify-data-container p {
