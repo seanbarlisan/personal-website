@@ -6,6 +6,7 @@
 import {
     SecretsManagerClient,
     GetSecretValueCommand,
+    UpdateSecretCommand
 } from "@aws-sdk/client-secrets-manager";
 
 import express from 'express';
@@ -79,6 +80,15 @@ async function refreshAccessToken() {
         // If a new refresh token is provided, update it
         if (response.data.refresh_token) {
             storedRefreshToken = response.data.refresh_token;
+            const updateSecret = async () => {
+                const command = new UpdateSecretCommand({
+                    refresh_token: storedRefreshToken
+                });
+
+                const response = await client.send(command);
+                console.log("Updated refresh token in AWS Secrets Manager:", response);
+            }
+
         }
         
         console.log("Access token refreshed, expires at:", new Date(tokenExpiryTime));
