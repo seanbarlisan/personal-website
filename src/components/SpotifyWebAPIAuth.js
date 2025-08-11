@@ -55,6 +55,40 @@ const authUrl = `https://accounts.spotify.com/authorize?` +
 
                 // Modified refresh function that uses the current refresh token
                 
+async function getSecrets() {
+    try {
+        const response = await client.send(
+            new GetSecretValueCommand({
+                SecretId: secret_name,
+                VersionStage: "AWSCURRENT",
+            })
+        );
+        return JSON.parse(response.SecretString);
+    } catch (error) {
+        console.error("Error retrieving secrets:", error);
+        throw error;
+    }
+}
+
+async function initializeSecretsAndTokens() {
+    try {
+        secrets = await getSecrets();
+        const CLIENT_ID = secrets.client_id;
+        const CLIENT_SECRET = secrets.client_secret;
+        storedRefreshToken = secrets.refresh_token;
+
+        // Try to refresh the token on startup using the stored refresh token
+        if (storedRefreshToken) {
+            console.log("Found refresh token on startup, attempting to get a new access token.");
+            await refreshAccessToken();
+        } else {
+            console.log("No refresh token found. User must log in.");
+        }
+    } catch (error) {
+        console.error("Failed to initialize secrets or refresh token on startup:", error);
+    }
+}
+
 async function refreshAccessToken() {
     try {
         const response = await axios({
@@ -62,44 +96,40 @@ async function refreshAccessToken() {
             url: 'https://accounts.spotify.com/api/token',
             data: new URLSearchParams({
                 grant_type: 'refresh_token',
-                refresh_token: storedRefreshToken || REFRESH_TOKEN // Use stored or fallback
+                refresh_token: storedRefreshToken
             }),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + (Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
+                'Authorization': 'Basic ' + (Buffer.from(secrets.client_id + ':' + secrets.client_secret).toString('base64'))
             }
         });
-        
+
         accessToken = response.data.access_token;
-        tokenExpiryTime = Date.now() + (response.data.expires_in * 1000); // Store expiry time
-        
-        // If a new refresh token is provided, update it in Secrets Manager
+        tokenExpiryTime = Date.now() + (response.data.expires_in * 1000);
+
         if (response.data.refresh_token) {
             storedRefreshToken = response.data.refresh_token;
-            
-            // Corrected updateSecret logic, we needed to store everything for it to work
             const newSecrets = {
-                client_id: CLIENT_ID,
-                client_secret: CLIENT_SECRET,
-                refresh_token: storedRefreshToken // Update the refresh token
+                ...secrets, // Keep other secrets
+                refresh_token: storedRefreshToken
             };
-
             const command = new UpdateSecretCommand({
                 SecretId: secret_name,
                 SecretString: JSON.stringify(newSecrets)
             });
-
             await client.send(command);
-            console.log("Updated refresh token in AWS Secrets Manager after refresh.");
+            console.log("Updated refresh token in AWS Secrets Manager.");
         }
-        
+
         console.log("Access token refreshed, expires at:", new Date(tokenExpiryTime));
         return accessToken;
     } catch (error) {
-        console.error("Failed to refresh token:", error);
+        console.error("Failed to refresh token:", error.response?.data || error.message);
+        storedRefreshToken = null; // Clear token if refresh fails
         throw error;
     }
 }
+
 
 // Helper function to check if token is expired or about to expire
 function isTokenExpired() {
@@ -168,7 +198,7 @@ app.get('/callback', async (req, res) => {
 app.get('/api/spotify-recently-listened', async (req, res) => {
     try {
         // Check if token needs refreshing
-        if (isTokenExpired()) {
+        if (!accessToken || isTokenExpired()) {
             console.log("Token expired or missing, refreshing...");
             await refreshAccessToken();
         }
@@ -220,8 +250,8 @@ async function initializeTokens() {
 // Call this when server starts
 initializeTokens();
 
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`Server listening at http://127.0.0.1:${port}`);
+    await initializeSecretsAndTokens();
 });
-
 
