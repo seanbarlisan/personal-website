@@ -54,6 +54,7 @@ const authUrl = `https://accounts.spotify.com/authorize?` +
                 `scope=${encodeURIComponent("user-read-private user-read-email")}`;
 
                 // Modified refresh function that uses the current refresh token
+                
 async function refreshAccessToken() {
     try {
         const response = await axios({
@@ -72,18 +73,24 @@ async function refreshAccessToken() {
         accessToken = response.data.access_token;
         tokenExpiryTime = Date.now() + (response.data.expires_in * 1000); // Store expiry time
         
-        // If a new refresh token is provided, update it
+        // If a new refresh token is provided, update it in Secrets Manager
         if (response.data.refresh_token) {
             storedRefreshToken = response.data.refresh_token;
-            const updateSecret = async () => {
-                const command = new UpdateSecretCommand({
-                    refresh_token: storedRefreshToken
-                });
+            
+            // Corrected updateSecret logic, we needed to store everything for it to work
+            const newSecrets = {
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET,
+                refresh_token: storedRefreshToken // Update the refresh token
+            };
 
-                const response = await client.send(command);
-                console.log("Updated refresh token in AWS Secrets Manager:", response);
-            }
+            const command = new UpdateSecretCommand({
+                SecretId: secret_name,
+                SecretString: JSON.stringify(newSecrets)
+            });
 
+            await client.send(command);
+            console.log("Updated refresh token in AWS Secrets Manager after refresh.");
         }
         
         console.log("Access token refreshed, expires at:", new Date(tokenExpiryTime));
@@ -131,22 +138,29 @@ app.get('/callback', async (req, res) => {
         
         accessToken = response.data.access_token;
         storedRefreshToken = response.data.refresh_token; // Store the new refresh token
-        const updateSecret = async () => {
-            const command = new UpdateSecretCommand({
-                refresh_token: storedRefreshToken
-            });
+        
+        // Corrected updateSecret logic
+        const newSecrets = {
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            refresh_token: storedRefreshToken // Update the refresh token
+        };
 
-            const response = await client.send(command);
-            console.log("Updated refresh token in AWS Secrets Manager:", response);
-        }
+        const command = new UpdateSecretCommand({
+            SecretId: secret_name,
+            SecretString: JSON.stringify(newSecrets)
+        });
+
+        await client.send(command);
+        console.log("Updated refresh token in AWS Secrets Manager after callback.");
+        
         tokenExpiryTime = Date.now() + (response.data.expires_in * 1000);
         
         console.log("Access Token:", accessToken);
-        console.log("New Refresh Token stored");
         res.send('Authorization successful! Tokens have been stored.');
     } catch (error) {
         console.error("Token exchange error:", error);
-        res.send('Failed to get tokens.');
+        res.status(500).send('Failed to get tokens.');
     }
 });
 
