@@ -1,8 +1,3 @@
-// Need to implement the frontend script for the JS on the index.html where it calls the custom endpoint and gets the data from the backend from the spotify blah
-// Need to move the AWS Secrets Manager code to a separate file or function on the backend because it will not work on the client browser
-// Need to finish the JSON separation and display logic for the Spotify data
-// Need to adjust information for other code etc..
-
 import {
     SecretsManagerClient,
     GetSecretValueCommand,
@@ -136,6 +131,14 @@ app.get('/callback', async (req, res) => {
         
         accessToken = response.data.access_token;
         storedRefreshToken = response.data.refresh_token; // Store the new refresh token
+        const updateSecret = async () => {
+            const command = new UpdateSecretCommand({
+                refresh_token: storedRefreshToken
+            });
+
+            const response = await client.send(command);
+            console.log("Updated refresh token in AWS Secrets Manager:", response);
+        }
         tokenExpiryTime = Date.now() + (response.data.expires_in * 1000);
         
         console.log("Access Token:", accessToken);
