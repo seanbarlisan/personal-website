@@ -1,5 +1,7 @@
 images/picture.jpeg
 images/picture2.jpg
+node_modules/
+package-lock.json
 *.jpg
 *.JPG
 *.png
