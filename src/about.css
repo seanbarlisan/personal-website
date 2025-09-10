@@ -53,3 +53,45 @@ body {
     align-items: left;
     height: 100vh;
 }
+
+        html, body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+        }
+
+        .content-wrapper {
+            position: relative;
+            padding-top: 520px; /* Increased from 120px to 140px */
+            width: 100%;
+            margin-top: 25rem;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Higher z-index to ensure it's above other content */
+            background-color: black;
+            border-bottom: 1px solid #333;
+            padding: 1rem 0;
+        }
+
+        section {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            background-color: black;
+            z-index: 10;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }

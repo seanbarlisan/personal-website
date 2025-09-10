@@ -1,4 +1,4 @@
-/* Rounded Corners CSS - Flexible Corner Targeting */
+/* Rounded Corners CSS - Flexible Corner Targeting (from your original CSS) */
 /* Top Left Corner Rounding */
 .rounded-tl-sm { border-top-left-radius: 0.125rem; }
 .rounded-tl { border-top-left-radius: 0.25rem; }
@@ -31,58 +31,16 @@
 .rounded-br-xl { border-bottom-right-radius: 0.75rem; }
 .rounded-br-full { border-bottom-right-radius: 9999px; }
 
+/* General Body Styling - Adjusted */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100vh;
-    padding-top: 60px;
-}
-
-#large-image {
-    max-width: 400px;
-    max-height: 400px;
-    border-radius: 50%; /* Makes the image circular */
-    object-fit: cover; /* Ensures the image covers the circular area properly */
-}
-
-.left-aligned {
-    position: absolute;
-    left: 50%;
-    top: 180px;
-    transform: translateX(-50%);
-}
-
-#position-text-1{
-    position: absolute;
-    left: 50%;
-    top: 600px;
-    transform: translateX(-50%); /* Centers the text horizontally */
+    padding-top: 114px; /* Adjust this value to match your banner's height */
+    background-color: black;
     color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-family: sans-serif;
+    /* Removed display: flex, justify-content, align-items, height: 100vh from here */
 }
 
-#position-text-2 {
-    position: absolute;
-    left: 50%;
-    top: 625px;
-    transform: translateX(-50%); /* Centers the text horizontally */
-    color: gray;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-#position-text-3 {
-    position: absolute;
-    left: 50%;
-    top: 650px;
-    transform: translateX(-50%); /* Centers the text horizontally */
-    color: gray;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
+/* Header Styling (from your original CSS) */
 header {
     position: fixed;
     width: 100%;
@@ -92,4 +50,79 @@ header {
     background-color: black;
     border-bottom: 1px solid #333;
     padding: 1rem 0;
+}
+
+/* Profile Image Styling - Adjusted */
+#large-image {
+    max-width: 300px; /* Adjusted to match HTML width */
+    height: auto; /* Ensures aspect ratio is maintained */
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the circular area properly */
+    display: block; /* Ensures it behaves like a block element for margins */
+    margin-bottom: 1rem; /* Add some space below the image */
+    /* Removed margin: 0 auto ... as parent flex handles centering */
+}
+
+/* Profile Text Styling - Adjusted (removed explicit text-align: center) */
+#position-text-1,
+#position-text-2,
+#position-text-3 {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    /* Removed text-align: center as parent flex container handles centering */
+    margin-bottom: 0.25rem; /* Small margin between text lines */
+}
+
+#position-text-2, #position-text-3 {
+    color: gray;
+}
+
+/* Styles for the Spotify section */
+#spotify-data-container {
+    padding: 3rem;
+    background-color: #1a1a1a;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Fixed width to match profile image */
+    margin-top: 50px;
+}
+
+#spotify-data-container h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1DB954; /* Spotify green */
+    text-align: center;
+}
+
+#spotify-data-container p {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+
+/* Styles for the fetched Spotify content (inside spotify-content) */
+#spotify-content .flex {
+    align-items: center;
+    gap: 1rem; /* Space between image and text */
+}
+
+#spotify-content img {
+    width: 64px; /* Smaller image size */
+    height: 64px;
+    border-radius: 0.25rem; /* Slightly less rounded */
+}
+
+#spotify-content .text-xl {
+    font-size: 1.125rem; /* Smaller track name */
+}
+
+#spotify-content .text-lg {
+    font-size: 0.9rem; /* Smaller artist name */
+}
+
+#spotify-content .text-sm {
+    font-size: 0.75rem; /* Smaller status text */
 }

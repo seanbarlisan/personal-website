@@ -2,6 +2,8 @@ images/picture.jpeg
 images/picture2.jpg
 node_modules/
 package-lock.json
+.vscode
+*.vscode
 *.jpg
 *.JPG
 *.png
