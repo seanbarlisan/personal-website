@@ -1,1 +1,15 @@
-Personal Website that I have developed on my own time. Uses simple static website alongside the implementation of basic JavaScript integration with ExpressJS and API endpoint calling with Spotify Developer
+# Personal Website
+
+## Background
+
+I created this website during my downtime at work and also when I was extremely bored of doing my other projects. I mindlessly programmed the website to use some basic. It has minimal features and is still a WIP, where I aim to streamline some features more efficiently such as the Spotify integration, dark mode and light mode support, and cleaner web design and animations.
+
+### Core Technologies
+
+* **CSS**
+* **HTML**
+* **TypeScript**
+
+### APIs
+
+* **Spotify Web API** - This just communicates with Spotify to extract the "Recently Played" songs. I plan to demonstrate and showcase more later on.
