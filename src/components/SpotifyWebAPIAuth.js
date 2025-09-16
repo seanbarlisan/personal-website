@@ -42,6 +42,7 @@ throw error;
 const CLIENT_ID = secrets.client_id;
 const CLIENT_SECRET = secrets.client_secret;
 const REFRESH_TOKEN = secrets.refresh_token; // This isn't needed for the initial token request but is for refreshing
+const ACCESS_TOKEN = secrets.access_token; // Not strictly necessary, but can be used if you want to start with a valid token
 const REDIRECT_URI = "http://127.0.0.1:3000/callback";
 
 let storedRefreshToken = REFRESH_TOKEN; // Start with the one from AWS Secrets
@@ -109,9 +110,11 @@ async function refreshAccessToken() {
 
         if (response.data.refresh_token) {
             storedRefreshToken = response.data.refresh_token;
+            storedAccessToken = response.data.access_token;
             const newSecrets = {
                 ...secrets, // Keep other secrets
-                refresh_token: storedRefreshToken
+                refresh_token: storedRefreshToken,
+                access_token: storedAccessToken
             };
             const command = new UpdateSecretCommand({
                 SecretId: secret_name,
