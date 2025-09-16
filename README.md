@@ -9,6 +9,7 @@ I created this website during my downtime at work and also when I was extremely 
 * **CSS**
 * **HTML**
 * **TypeScript**
+* **JavaScript**
 
 ### APIs
 
