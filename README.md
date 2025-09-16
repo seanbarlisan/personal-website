@@ -6,10 +6,10 @@ I created this website during my downtime at work and also when I was extremely 
 
 ### Core Technologies
 
-* **CSS**
-* **HTML**
-* **TypeScript**
-* **JavaScript**
+* **CSS** - Website formatting
+* **HTML** - Website formatting
+* **TypeScript** - Website formatting
+* **JavaScript** - Connection to API endpoints
 
 ### APIs
 
