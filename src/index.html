@@ -45,25 +45,38 @@
     </main>
     <script>
         async function fetchSpotifyData() {
-            // Replace this URL with the API endpoint URL from AWS Lambda
+            // Update the API URL to your actual API Gateway URL
             const apiUrl = 'https://4ie8szygu5.execute-api.us-east-1.amazonaws.com/prod/recently-played';
-
+            
             try {
                 const response = await fetch(apiUrl);
+                console.log('API Response:', response); // Debug logging
+                
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
+                
                 const data = await response.json();
+                console.log('Data received:', data); // Debug logging
 
-                // Display the data on your website
+                // Update the display with better formatting
                 document.getElementById('music-data').innerHTML = `
-                    <p>Title: ${data.title}</p>
-                    <p>Artist: ${data.artist}</p>
-                    <img src="${data.albumArt}" alt="Album Art">
+                    <div class="flex flex-col items-center gap-4">
+                        <img src="${data.albumArt}" alt="Album Art" class="w-48 h-48 rounded-lg shadow-lg">
+                        <div class="text-center">
+                            <p class="text-xl font-bold">${data.title}</p>
+                            <p class="text-gray-400">${data.artist}</p>
+                        </div>
+                    </div>
                 `;
             } catch (error) {
                 console.error('Fetch error:', error);
-                document.getElementById('music-data').innerHTML = `<p>Error loading data.</p>`;
+                document.getElementById('music-data').innerHTML = `
+                    <div class="text-red-500">
+                        <p>Error loading music data</p>
+                        <p class="text-sm">${error.message}</p>
+                    </div>
+                `;
             }
         }
 
