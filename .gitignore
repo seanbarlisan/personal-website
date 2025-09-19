@@ -12,3 +12,7 @@ package-lock.json
 *.conf
 .github
 index.js
+src/local_components
+src/lambda_components/node_modules
+src/lambda_components/package-lock.json
+src/lambda_components/package.json
