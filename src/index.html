@@ -30,7 +30,7 @@
         <!-- Spotify Data Display Section -->
         <div id="spotify-data-container" class="flex-shrink-0 bg-gray-900 rounded-lg p-6 px-24 max-w-md">
             <h2 class="text-xl font-bold mb-4 text-center">Recently Played</h2>
-            <div id="music-cell" class="text-center">
+            <div id="music-data" class="text-center">
                 <p class="text-gray-400">Loading...</p>
             </div>
         </div>
@@ -46,7 +46,7 @@
     <script>
         async function fetchSpotifyData() {
             // Replace this URL with the API endpoint URL from AWS Lambda
-            const apiUrl = 'https://chtqxz92y3.execute-api.us-east-1.amazonaws.com/default/SpotifyWebAPI';
+            const apiUrl = 'https://4ie8szygu5.execute-api.us-east-1.amazonaws.com/prod/recently-played';
 
             try {
                 const response = await fetch(apiUrl);
