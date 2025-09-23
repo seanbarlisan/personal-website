@@ -56,20 +56,12 @@ function isTokenExpired() {
 
 export const handler = async (event) => {
     try {
-        // Always get fresh secrets
         secrets = await getSecrets();
         accessToken = secrets.access_token;
-        tokenExpiryTime = secrets.token_expiry || 0; // Add token expiry to secrets
+        refreshToken = secrets.refresh_token;
 
-        // Force token refresh if expired
         if (isTokenExpired()) {
             await refreshAccessToken();
-            // Update secrets with new expiry time
-            secrets.token_expiry = tokenExpiryTime;
-            await client.send(new UpdateSecretCommand({
-                SecretId: secret_name,
-                SecretString: JSON.stringify(secrets)
-            }));
         }
 
         const spotifyResponse = await axios.get('https://api.spotify.com/v1/me/player/recently-played', {
@@ -93,15 +85,7 @@ export const handler = async (event) => {
         console.error("API Error:", error.response?.data || error.message);
         return {
             statusCode: 500,
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "Content-Type",
-                "Access-Control-Allow-Methods": "GET"
-            },
-            body: JSON.stringify({ 
-                error: 'Failed to fetch music data',
-                details: error.response?.data || error.message 
-            })
+            body: JSON.stringify({ error: 'Failed to fetch music data.' })
         };
     }
 };
