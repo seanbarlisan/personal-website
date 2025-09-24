@@ -126,3 +126,19 @@ header {
 #spotify-content .text-sm {
     font-size: 0.75rem; /* Smaller status text */
 }
+
+/* For larger screens, add some left margin */
+@media (min-width: 768px) {
+    .content-wrapper {
+        padding-left: 120px; /* Instead of fixed positioning */
+        padding-right: 2rem;
+    }
+}
+
+/* For mobile screens, keep normal padding */
+@media (max-width: 767px) {
+    .content-wrapper {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
