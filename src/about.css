@@ -103,7 +103,6 @@ section {
     max-width: 1200px;
     margin: 0 auto;
 }
-
 /* For larger screens, add some left margin */
 @media (min-width: 768px) {
     .content-wrapper {
