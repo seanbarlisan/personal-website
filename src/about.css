@@ -1,5 +1,4 @@
 /* Rounded Corners CSS - Flexible Corner Targeting */
-
 /* Top Left Corner Rounding */
 .rounded-tl-sm { border-top-left-radius: 0.125rem; }
 .rounded-tl { border-top-left-radius: 0.25rem; }
@@ -32,66 +31,91 @@
 .rounded-br-xl { border-bottom-right-radius: 0.75rem; }
 .rounded-br-full { border-bottom-right-radius: 9999px; }
 
+/* Base HTML and Body Styles */
+html, body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: white;
+}
+
+/* Body Layout - Changed to allow scrolling */
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start; /* Changed from center to allow natural flow */
+    min-height: 100vh; /* Changed from height to min-height */
 }
 
-#projects-list{
+/* Fixed Header */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: black;
+    border-bottom: 1px solid #333;
+    padding: 1rem 0;
+}
+
+/* Content Wrapper - Accounts for fixed header */
+.content-wrapper {
+    position: relative;
+    padding-top: 120px; /* Increased from 80px for better spacing */
+    width: 100%;
+}
+
+/* Projects List Container */
+#projects-list {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Changed from center */
+    position: relative; /* Added position property */
     left: 100px;
-    height: 100vh;
+    width: calc(100% - 100px); /* Ensure it doesn't overflow */
+    /* Removed height: 100vh to allow natural content flow */
 }
 
-.project-title{
+/* Project Title Styling */
+.project-title {
     text-align: left;
-    justify-content: left;
-    align-items: left;
-    height: 100vh;
+    /* Removed invalid justify-content and align-items properties */
+    /* Removed height: 100vh to allow natural content sizing */
+    margin-bottom: 1rem; /* Add some spacing between titles */
 }
 
-        html, body {
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            background-color: black;
-            color: white;
-        }
+/* Section Styling */
+section {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    background-color: black;
+    z-index: 10;
+}
 
-        .content-wrapper {
-            position: relative;
-            padding-top: 520px; /* Increased from 120px to 140px */
-            width: 100%;
-            margin-top: 25rem;
-        }
+/* Container Styling */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000; /* Higher z-index to ensure it's above other content */
-            background-color: black;
-            border-bottom: 1px solid #333;
-            padding: 1rem 0;
-        }
+/* For larger screens, add some left margin */
+@media (min-width: 768px) {
+    .content-wrapper {
+        padding-left: 120px; /* Instead of fixed positioning */
+        padding-right: 2rem;
+    }
+}
 
-        section {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-            background-color: black;
-            z-index: 10;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+/* For mobile screens, keep normal padding */
+@media (max-width: 767px) {
+    .content-wrapper {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
