@@ -63,7 +63,7 @@ header {
 /* Content Wrapper - Accounts for fixed header */
 .content-wrapper {
     position: relative;
-    padding-top: 120px; /* Increased from 80px for better spacing */
+    padding-top: 100px; /* Increased from 80px for better spacing */
     width: 100%;
 }
 
